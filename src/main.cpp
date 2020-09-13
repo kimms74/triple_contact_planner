@@ -14,7 +14,7 @@ using namespace suhan_contact_planner;
 
 int main(int argc, char **argv)
 {
-  ros::init(argc, argv, "suhan_contact_planner_ex");
+  ros::init(argc, argv, "suhan_contact_planner");
   ros::NodeHandle nh;
   std::string path = ros::package::getPath("triple_contact_planner");
 
