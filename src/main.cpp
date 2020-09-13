@@ -34,6 +34,12 @@ int main(int argc, char **argv)
   com_T.setIdentity();
   com_T.translation() = -com;
 
+  // Eigen::Vector3d com1;
+  // com1 << -0.3, 0.15, 0.015;
+  // Eigen::Affine3d com_T1;
+  // com_T1.setIdentity();
+  // com_T1.translation() = -com1;
+
   std::vector<ContactPtr> contact_nodes_;
   contact_nodes_.resize(3);
 
@@ -134,9 +140,9 @@ int main(int argc, char **argv)
                 //  << get<0>(result[1]).matrix() << endl
                 //  << "  transform3 : " << endl
                 //  << get<0>(result[2]).matrix() << endl;
-                // file << "      force 1 : " << contact_nodes_.at(0)->getContactForceTorque().transpose().format(CommaInitFmt) << endl
-                //      << "      force 2 : " << contact_nodes_.at(1)->getContactForceTorque().transpose().format(CommaInitFmt) << endl
-                //      << "      force 3: " << contact_nodes_.at(2)->getContactForceTorque().transpose().format(CommaInitFmt) << endl;
+                file << "  force 1 : " << contact_nodes_.at(0)->getContactForceTorque().transpose().format(CommaInitFmt) << endl
+                     << "  force 2 : " << contact_nodes_.at(1)->getContactForceTorque().transpose().format(CommaInitFmt) << endl
+                     << "  force 3: " << contact_nodes_.at(2)->getContactForceTorque().transpose().format(CommaInitFmt) << endl;
                 i++;
               }
 

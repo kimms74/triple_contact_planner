@@ -19,7 +19,8 @@ public:
   ContactOptimizationSolver();
   void setContactNumber(int contact_number);
   void addConstraint(ConstraintBasePtr cb);
-  bool solve(Eigen::VectorXd &result_force);
+  bool solveBottom(Eigen::VectorXd &result_force);
+  bool solveTop(Eigen::VectorXd &result_force);
 
 private:
   qpOASES::SQProblem qproblem_;
