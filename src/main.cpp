@@ -134,9 +134,9 @@ int main(int argc, char **argv)
                 //  << get<0>(result[1]).matrix() << endl
                 //  << "  transform3 : " << endl
                 //  << get<0>(result[2]).matrix() << endl;
-                // file << "      force 1 : " << contact_nodes_.at(0)->getContactForceTorque().transpose().format(CommaInitFmt) << endl
-                //      << "      force 2 : " << contact_nodes_.at(1)->getContactForceTorque().transpose().format(CommaInitFmt) << endl
-                //      << "      force 3: " << contact_nodes_.at(2)->getContactForceTorque().transpose().format(CommaInitFmt) << endl;
+                file << "  force 1 : " << contact_nodes_.at(0)->getContactForceTorque().transpose().format(CommaInitFmt) << endl
+                     << "  force 2 : " << contact_nodes_.at(1)->getContactForceTorque().transpose().format(CommaInitFmt) << endl
+                     << "  force 3: " << contact_nodes_.at(2)->getContactForceTorque().transpose().format(CommaInitFmt) << endl;
                 i++;
               }
 
