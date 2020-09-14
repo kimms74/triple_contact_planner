@@ -23,13 +23,22 @@ public:
   Eigen::Matrix<double, 2, 6> getForceLimit() override
   {
     Eigen::Matrix<double, 2, 6> limit_matrix;
-    for (int i = 0; i < 6; i++)
+    for (int i = 0; i < 3; i++)
     {
       // limit_matrix(0, i) = 1;
       // limit_matrix(1, i) = -10;
       limit_matrix(0, i) = -20;
       limit_matrix(1, i) = -20;
     }
+
+    for (int i = 3; i < 6; i++)
+    {
+      // limit_matrix(0, i) = 1;
+      // limit_matrix(1, i) = -10;
+      limit_matrix(0, i) = -5;
+      limit_matrix(1, i) = -5;
+    }
+
     return limit_matrix;
   }
 };
