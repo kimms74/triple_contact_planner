@@ -55,7 +55,7 @@ int main(int argc, char **argv)
 
   vector<vector<int>> all_combination = get_combinations_from_vector<int>(links, 2);
   vector<vector<int>> tot_combination;
-  for (auto combination : all_combination)
+  for (auto &combination : all_combination)
   {
     for (int i = 0; i < 7; i++)
     {
@@ -75,9 +75,9 @@ int main(int argc, char **argv)
   Eigen::IOFormat CommaInitFmt(Eigen::StreamPrecision, Eigen::DontAlignCols, ", ", ", ", "", "", "[", "]");
   int i = 0;
   tuple<Eigen::Affine3d, std::string, double> result[3];
-  for (auto combination : tot_combination)
+  for (auto &combination : tot_combination)
   {
-    for (auto ratio_combi : ratio_combination)
+    for (auto &ratio_combi : ratio_combination)
     {
       for (int j = 0; j < grp_bottom.candids_set[combination[0]].size(); j++)
       {

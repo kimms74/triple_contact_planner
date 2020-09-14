@@ -19,7 +19,7 @@ public:
   void setRobot(RobotDynamicsModelPtr robot);
   bool solve();
   void setBottom(const double &contact_number, const double &contact_bottom_number, const std::vector<ContactPtr> &contacts, ContactOptimizationSolver &solver_bottom);
-  void setTop(const double &contact_number, const double &contact_bottom_number, const std::vector<ContactPtr> &contacts, ContactOptimizationSolver &solver_top);
+  void setTop(const double &contact_number, const double &contact_bottom_number, const std::vector<ContactPtr> &contacts, const double &normal_force, ContactOptimizationSolver &solver_top);
 
 private:
   ContactModelPtr model_;
