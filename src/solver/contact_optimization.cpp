@@ -254,9 +254,10 @@ namespace suhan_contact_planner
       if(solver_top.solve(result_top))
       {
         
-        for (int i= contact_bottom_number; i < contact_number-contact_bottom_number; i++ )
+        for (int i= contact_bottom_number; i < contact_number; i++ )
         {
-          contacts[i]->setContactForceTorque(result_top.segment<6>(i * 6));
+          
+          contacts[i]->setContactForceTorque(result_top.segment<6>((i-contact_bottom_number) * 6));
         }
         
       }
