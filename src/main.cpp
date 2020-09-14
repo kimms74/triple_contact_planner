@@ -14,7 +14,7 @@ using namespace suhan_contact_planner;
 
 int main(int argc, char **argv)
 {
-  ros::init(argc, argv, "suhan_contact_planner_ex");
+  ros::init(argc, argv, "suhan_contact_planner");
   ros::NodeHandle nh;
   std::string path = ros::package::getPath("triple_contact_planner");
 
@@ -34,6 +34,12 @@ int main(int argc, char **argv)
   com_T.setIdentity();
   com_T.translation() = -com;
 
+  // Eigen::Vector3d com1;
+  // com1 << -0.3, 0.15, 0.015;
+  // Eigen::Affine3d com_T1;
+  // com_T1.setIdentity();
+  // com_T1.translation() = -com1;
+
   std::vector<ContactPtr> contact_nodes_;
   contact_nodes_.resize(3);
 
@@ -49,7 +55,7 @@ int main(int argc, char **argv)
 
   vector<vector<int>> all_combination = get_combinations_from_vector<int>(links, 2);
   vector<vector<int>> tot_combination;
-  for (auto combination : all_combination)
+  for (auto &combination : all_combination)
   {
     for (int i = 0; i < 7; i++)
     {
@@ -69,9 +75,9 @@ int main(int argc, char **argv)
   Eigen::IOFormat CommaInitFmt(Eigen::StreamPrecision, Eigen::DontAlignCols, ", ", ", ", "", "", "[", "]");
   int i = 0;
   tuple<Eigen::Affine3d, std::string, double> result[3];
-  for (auto combination : tot_combination)
+  for (auto &combination : tot_combination)
   {
-    for (auto ratio_combi : ratio_combination)
+    for (auto &ratio_combi : ratio_combination)
     {
       for (int j = 0; j < grp_bottom.candids_set[combination[0]].size(); j++)
       {
