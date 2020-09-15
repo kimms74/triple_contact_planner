@@ -28,6 +28,13 @@ int main(int argc, char **argv)
   RobotDynamicsModelPtr robot_model = make_shared<DexterousRobotModel>();
   op.setRobot(robot_model);
 
+  Eigen::MatrixXd origin(4,4);
+  origin.setIdentity();
+  Eigen::Vector3d normal_vector;
+  normal_vector = origin.block<3,1>(0,2);
+  op.setOrigin(origin);
+  op.setNormalVector(normal_vector);
+
   Eigen::Vector3d com;
   com << -0.40664, 0.12478, 0.18233;
   Eigen::Affine3d com_T;
@@ -52,7 +59,7 @@ int main(int argc, char **argv)
 
   ContactModelPtr model = make_shared<StefanModel>("hi");
   model->setMass(3.75);
-  model->setBottomMass(2.75);
+
 
   vector<vector<int>> all_combination = get_combinations_from_vector<int>(links, 2);
   vector<vector<int>> tot_combination;
