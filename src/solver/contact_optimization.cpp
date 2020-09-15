@@ -39,7 +39,7 @@ namespace suhan_contact_planner
     b.setZero(6);
     // b.head<3>() = model_->getTransform().linear() *
     //               Eigen::Vector3d(0, 0, 9.8) * model_->getMass(); // TODO: Check this
-    b.head<3>() =  Eigen::Vector3d(0, 0, 9.8) * model_->getMass(); // TODO: Check this
+    b.head<3>() =  Eigen::Vector3d(0, 0, 9.8) * model_->getBottomMass(); // TODO: Check this
     // TODO: Momentum + b(3~5)
     for (size_t i = 0; i < contact_bottom_number; i++)
     {

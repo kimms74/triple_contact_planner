@@ -52,6 +52,7 @@ int main(int argc, char **argv)
 
   ContactModelPtr model = make_shared<StefanModel>("hi");
   model->setMass(3.75);
+  model->setBottomMass(2.75);
 
   vector<vector<int>> all_combination = get_combinations_from_vector<int>(links, 2);
   vector<vector<int>> tot_combination;

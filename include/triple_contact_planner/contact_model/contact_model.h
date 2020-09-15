@@ -65,8 +65,10 @@ public:
 
   // const std::vector < ContactPtr > & getContactSamples() { return contact_samples_; }
   inline double getMass() { return mass_; }
+  inline double getBottomMass() { return bottom_mass_; }
   virtual double getBottomPositionZ() = 0;
   void setMass(double mass) { mass_ = mass; }
+  void setBottomMass(double mass) { bottom_mass_ = mass; }
   void setGoalNode() { goal_node_ = true; }
   bool goalNode() { return goal_node_; }
 
@@ -89,6 +91,7 @@ protected:
   
   bool goal_node_ {false};
   double mass_ {3.75};
+  double bottom_mass_ {3.75};
 };
 
 typedef std::shared_ptr<ContactModel> ContactModelPtr;
