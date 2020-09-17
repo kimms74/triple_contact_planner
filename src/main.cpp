@@ -28,17 +28,19 @@ int main(int argc, char **argv)
   RobotDynamicsModelPtr robot_model = make_shared<DexterousRobotModel>();
   op.setRobot(robot_model);
 
-  Eigen::MatrixXd origin(4,4);
-  origin.setIdentity();
+  Eigen::MatrixXd object_rotation(3,3);
+  // object_rotation << 1, 0, 0,
+  //                   0, -1, 0,
+  //                   0, 0, -1;
+  object_rotation.setIdentity();
   Eigen::Vector3d normal_vector;
-  normal_vector = origin.block<3,1>(0,2);
-  op.setOrigin(origin);
-  op.setNormalVector(normal_vector);
+  normal_vector = object_rotation.block<3,1>(0,2);
+  op.setObjectRotation(object_rotation);
 
   Eigen::Vector3d com;
   com << -0.40664, 0.12478, 0.18233;
   Eigen::Affine3d com_T;
-  com_T.setIdentity();
+  com_T.linear().setIdentity();
   com_T.translation() = -com;
 
   // Eigen::Vector3d com1;
