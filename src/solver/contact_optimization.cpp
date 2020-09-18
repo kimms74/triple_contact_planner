@@ -70,7 +70,6 @@ namespace suhan_contact_planner
     d_all.resize(12*(contact_top_number +1));
 
     C_all.setZero(12 * (contact_top_number +1), 6 * (contact_top_number +1));
-    // d_all.setZero(contact_number * 12);
 
     Eigen::MatrixXd C_max[6];
     Eigen::VectorXd d_max[6];
@@ -156,6 +155,7 @@ namespace suhan_contact_planner
       A.block<3, 3>(3, i * 6) = cross_skew(object_rotation_*contacts[i]->getContactTransform().translation());
       A.block<3, 3>(3, i * 6 + 3).setIdentity();
     }
+
     eq_constraint->setA(A);
     eq_constraint->setEqualityCondition(b);
 
@@ -166,10 +166,9 @@ namespace suhan_contact_planner
 
     Eigen::MatrixXd C_all;
     Eigen::VectorXd d_all;
-    d_all.resize(12*contact_bottom_number+1);
+    d_all.resize(12*contact_bottom_number);
 
-    C_all.setZero(12 * contact_bottom_number+1, 6 * contact_bottom_number);
-    // d_all.setZero(contact_number * 12);
+    C_all.setZero(12 * contact_bottom_number, 6 * contact_bottom_number);
 
     Eigen::MatrixXd C_max[6];
     Eigen::VectorXd d_max[6];
@@ -205,13 +204,13 @@ namespace suhan_contact_planner
       C_all.block<12, 6>(i * 12, i * 6) = C_i * R_hat;
       d_all.segment<12>(i * 12) = d_i;
     }
-    
+
     ineq_constraint->setA(C_all);
     ineq_constraint->setOnlyLowerBound(d_all);
     // ineq_constraint->printCondition();
 
     solver_bottom.addConstraint(ineq_constraint);
-    // solver.setContactNumber(model_->getContactNumber() -1);
+
     solver_bottom.setContactNumber(contact_bottom_number);
   }
 
@@ -233,7 +232,7 @@ namespace suhan_contact_planner
     
     Eigen::VectorXd result_bottom;
     Eigen::VectorXd result_top;
-    // if (solver_bottom.solveBottom(result_bottom))
+
     if (solver_top.solve(result_top))
     {
 
@@ -242,8 +241,7 @@ namespace suhan_contact_planner
 
         contacts[i +contact_bottom_number]->setContactForceTorque(result_top.segment<6>((i) * 6));
       }
-
-      Eigen::VectorXd normal_force(3);
+      Eigen::Vector3d normal_force;
       normal_force = result_top.segment<3>(contact_top_number*6);
 
       setBottom(contact_number, contact_bottom_number, contacts, normal_force, solver_bottom);
@@ -269,12 +267,11 @@ namespace suhan_contact_planner
       // Eigen::MatrixXd d_test;
       // d_test.setZero(6,1);
       // contacts[contact_bottom_number]->setContactForceTorque(d_test);
-
-      }
-
       return true;
+      }
+      return false;
     }
-    return false;
+    
   }
 
 } // namespace suhan_contact_planner

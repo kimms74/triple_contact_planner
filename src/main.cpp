@@ -32,7 +32,12 @@ int main(int argc, char **argv)
   // object_rotation << 1, 0, 0,
   //                   0, -1, 0,
   //                   0, 0, -1;
-  object_rotation.setIdentity();
+
+  object_rotation << 1, 0, 0,
+                    0, 0, -1,
+                    0, 1, 0;
+
+  // object_rotation.setIdentity();
   Eigen::Vector3d normal_vector;
   normal_vector = object_rotation.block<3,1>(0,2);
   op.setObjectRotation(object_rotation);
@@ -153,6 +158,7 @@ int main(int argc, char **argv)
                 file << "  force 1 : " << contact_nodes_.at(0)->getContactForceTorque().transpose().format(CommaInitFmt) << endl
                      << "  force 2 : " << contact_nodes_.at(1)->getContactForceTorque().transpose().format(CommaInitFmt) << endl
                      << "  force 3: " << contact_nodes_.at(2)->getContactForceTorque().transpose().format(CommaInitFmt) << endl;
+      
                 i++;
               }
 
