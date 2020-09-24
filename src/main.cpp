@@ -133,13 +133,17 @@ int main(int argc, char **argv)
                 // for (int t = 0; t < 3; t++)
                 //   get<0>(result[t]).translation() += get<0>(result[t]).linear() * Eigen::Vector3d(0, 0, -0.103);
 
-                Eigen::VectorXd t1(7), t2(7), t3(7);
-                t1 << get<0>(result[0]).translation()+ get<0>(result[0]).linear()*Eigen::Vector3d(0, 0, -0.103), 
-                      Eigen::Quaterniond(get<0>(result[0]).linear()).coeffs();
-                t2 << get<0>(result[1]).translation()+ get<0>(result[1]).linear()*Eigen::Vector3d(0, 0, -0.103),
-                      Eigen::Quaterniond(get<0>(result[1]).linear()).coeffs();
-                t3 << get<0>(result[2]).translation()+ get<0>(result[2]).linear()*Eigen::Vector3d(0, 0, -0.103),
-                      Eigen::Quaterniond(get<0>(result[2]).linear()).coeffs();
+            //     Eigen::VectorXd t1(7), t2(7), t3(7);
+            //     t1 << get<0>(result[0]).translation()+ get<0>(result[0]).linear()*Eigen::Vector3d(0, 0, -0.103), 
+            //           Eigen::Quaterniond(get<0>(result[0]).linear()).coeffs();
+            //     t2 << get<0>(result[1]).translation()+ get<0>(result[1]).linear()*Eigen::Vector3d(0, 0, -0.103),
+            //           Eigen::Quaterniond(get<0>(result[1]).linear()).coeffs();
+            //     t3 << get<0>(result[2]).translation()+ get<0>(result[2]).linear()*Eigen::Vector3d(0, 0, -0.103),
+            //           Eigen::Quaterniond(get<0>(result[2]).linear()).coeffs();
+                  Eigen::VectorXd t1(7), t2(7), t3(7);
+                  t1 << get<0>(result[0]).translation(), Eigen::Quaterniond(get<0>(result[0]).linear()).coeffs();
+                  t2 << get<0>(result[1]).translation(), Eigen::Quaterniond(get<0>(result[1]).linear()).coeffs();
+                  t3 << get<0>(result[2]).translation(), Eigen::Quaterniond(get<0>(result[2]).linear()).coeffs();
                 // t3 << Eigen::Map<Eigen::VectorXd>( ( get<0>(result[2]).translation()+ get<0>(result[2]).linear()*Eigen::Vector3d(0, 0, -0.103)).data(), 3)  , 
                 //                                   Eigen::Quaterniond(get<0>(result[2]).linear()).coeffs();
 
