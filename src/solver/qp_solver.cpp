@@ -21,9 +21,8 @@ namespace suhan_contact_planner
 
   bool QpSolver::qp_solve(const Eigen::VectorXd &tf1, const Eigen::VectorXd &tf2, const Eigen::VectorXd &tf3, const Eigen::VectorXd &object_rotation)
   {
-    Eigen::MatrixXd object_rot(3,3);
     object_rotation_ = object_rotation.matrix();
-
+    
     std::vector<Eigen::VectorXd> tf(3);
     tf.at(0)= tf1;
     tf.at(1)= tf2;
