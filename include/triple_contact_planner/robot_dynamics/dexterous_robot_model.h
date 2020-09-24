@@ -20,16 +20,45 @@ public:
   Eigen::Vector3d getMaximumMoment();
 
   // for grasp contact
-  Eigen::Matrix<double, 2, 6> getForceLimit() override
+  Eigen::Matrix<double, 2, 6> getForceLimitTop() override
   {
     Eigen::Matrix<double, 2, 6> limit_matrix;
-    for (int i = 0; i < 6; i++)
+    for (int i = 0; i < 3; i++)
+    {
+      limit_matrix(0, i) = -40;
+      limit_matrix(1, i) = -40;
+    }
+
+    for (int i = 3; i < 6; i++)
+    {
+      limit_matrix(0, i) = -2.24;
+      limit_matrix(1, i) = -2.24;
+    }
+
+    return limit_matrix;
+  }
+
+    Eigen::Matrix<double, 2, 6> getForceLimitBottom() override
+  {
+    Eigen::Matrix<double, 2, 6> limit_matrix;
+    for (int i = 0; i < 3; i++)
+    {
+      // limit_matrix(0, i) = -27.05;
+      // limit_matrix(1, i) = -27.05;
+      limit_matrix(0, i) = -13;
+      limit_matrix(1, i) = -13;
+    }
+
+    limit_matrix.block<1,1>(0,2) << 0;
+
+    for (int i = 3; i < 6; i++)
     {
       // limit_matrix(0, i) = 1;
       // limit_matrix(1, i) = -10;
-      limit_matrix(0, i) = -20;
-      limit_matrix(1, i) = -20;
+      limit_matrix(0, i) = -10;
+      limit_matrix(1, i) = -10;
     }
+
     return limit_matrix;
   }
 };

@@ -41,7 +41,7 @@ bool ContactOptimizationSolver::solve(Eigen::VectorXd& result_force)
   int iter = 1000;
   int result;
   A_row_ = A_;
-  // qproblem_.setPrintLevel(qpOASES::PL_DEBUG_ITER);
+  // qproblem_.setPrintLevel(qpOASES::PL_HIGH);
   
   if(!hot_start_)
   {
@@ -82,6 +82,7 @@ bool ContactOptimizationSolver::solve(Eigen::VectorXd& result_force)
     // std::cout << "qp solve failed: " << result << std::endl;
     return false;
   }
+  
 }
 
 void ContactOptimizationSolver::resize(int total_row)

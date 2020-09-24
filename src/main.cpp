@@ -28,10 +28,24 @@ int main(int argc, char **argv)
   RobotDynamicsModelPtr robot_model = make_shared<DexterousRobotModel>();
   op.setRobot(robot_model);
 
+  Eigen::MatrixXd object_rotation(3,3);
+  // object_rotation << 1, 0, 0,
+  //                   0, -1, 0,
+  //                   0, 0, -1;
+
+  object_rotation << 1, 0, 0,
+                    0, 0, -1,
+                    0, 1, 0;
+
+  // object_rotation.setIdentity();
+  Eigen::Vector3d normal_vector;
+  normal_vector = object_rotation.block<3,1>(0,2);
+  op.setObjectRotation(object_rotation);
+
   Eigen::Vector3d com;
   com << -0.40664, 0.12478, 0.18233;
   Eigen::Affine3d com_T;
-  com_T.setIdentity();
+  com_T.linear().setIdentity();
   com_T.translation() = -com;
 
   // Eigen::Vector3d com1;
@@ -52,6 +66,7 @@ int main(int argc, char **argv)
 
   ContactModelPtr model = make_shared<StefanModel>("hi");
   model->setMass(3.75);
+
 
   vector<vector<int>> all_combination = get_combinations_from_vector<int>(links, 2);
   vector<vector<int>> tot_combination;
@@ -143,6 +158,7 @@ int main(int argc, char **argv)
                 file << "  force 1 : " << contact_nodes_.at(0)->getContactForceTorque().transpose().format(CommaInitFmt) << endl
                      << "  force 2 : " << contact_nodes_.at(1)->getContactForceTorque().transpose().format(CommaInitFmt) << endl
                      << "  force 3: " << contact_nodes_.at(2)->getContactForceTorque().transpose().format(CommaInitFmt) << endl;
+      
                 i++;
               }
 
