@@ -21,6 +21,7 @@ public:
   void addConstraint(ConstraintBasePtr cb);
   bool solve(Eigen::VectorXd &result_force);
 
+
 private:
   qpOASES::SQProblem qproblem_;
 
