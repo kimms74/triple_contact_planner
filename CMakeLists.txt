@@ -48,6 +48,7 @@ add_library(${PROJECT_NAME}_lib
 
   src/solver/contact_optimization_solver.cpp
   src/solver/contact_optimization.cpp
+  src/solver/qp_solver.cpp
   src/solver/constraint/constraint_base.cpp
   src/solver/constraint/constraint_equality.cpp
   src/solver/constraint/constraint_inequality.cpp

@@ -46,14 +46,14 @@ namespace suhan_contact_planner
     //               Eigen::Vector3d(0, 0, 9.8) * model_->getMass(); // TODO: Check this
     b.head<3>() =  Eigen::Vector3d(0, 0, 9.8) * model_->getMass(); // TODO: Check this
     // TODO: Momentum + b(3~5)
-
+    
     for (int i = 0; i < contact_top_number; i++)
     {
       A.block<3, 3>(0, i * 6).setIdentity();
       A.block<3, 3>(3, i * 6) = cross_skew(object_rotation_*contacts[i +contact_bottom_number]->getContactTransform().translation());
       A.block<3, 3>(3, i * 6 + 3).setIdentity();
     }
-
+    
     A.block<3, 3>(0,(contact_top_number)*6).setIdentity();
     A.block<3, 3>(3, (contact_top_number)*6 + 3).setIdentity();
 
