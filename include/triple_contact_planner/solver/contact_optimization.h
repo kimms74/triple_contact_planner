@@ -9,7 +9,7 @@
 #include <triple_contact_planner/solver/constraint/constraint_inequality.h>
 #include <triple_contact_planner/solver/contact_optimization_solver.h>
 
-namespace suhan_contact_planner
+namespace contact_planner
 {
 
 class ContactOptimization

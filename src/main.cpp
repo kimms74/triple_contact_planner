@@ -11,12 +11,12 @@
 
 #include <ros/package.h>
 using namespace std;
-using namespace suhan_contact_planner;
+using namespace contact_planner;
 
 int main(int argc, char **argv)
 {
   
-  ros::init(argc, argv, "suhan_contact_planner");
+  ros::init(argc, argv, "contact_planner");
   ros::NodeHandle nh;
   std::string path = ros::package::getPath("triple_contact_planner");
 

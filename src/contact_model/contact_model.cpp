@@ -2,7 +2,7 @@
 
 #include <ros/ros.h>
 
-namespace suhan_contact_planner
+namespace contact_planner
 {
 
 static Eigen::Vector3d getPhi(Eigen::Matrix3d current_rotation,

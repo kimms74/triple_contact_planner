@@ -2,7 +2,7 @@
 
 #include "triple_contact_planner/robot_dynamics/robot_dynamics_model.h"
 
-namespace suhan_contact_planner
+namespace contact_planner
 {
 
 class DexterousRobotModel : public RobotDynamicsModel

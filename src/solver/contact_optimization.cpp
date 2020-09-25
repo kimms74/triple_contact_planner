@@ -1,6 +1,6 @@
 #include <triple_contact_planner/solver/contact_optimization.h>
 
-namespace suhan_contact_planner
+namespace contact_planner
 {
 
   Eigen::Matrix3d cross_skew(Eigen::Vector3d input)
@@ -274,4 +274,4 @@ namespace suhan_contact_planner
     
   }
 
-} // namespace suhan_contact_planner
+} // namespace contact_planner

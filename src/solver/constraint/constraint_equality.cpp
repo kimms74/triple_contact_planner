@@ -1,6 +1,6 @@
 #include <triple_contact_planner/solver/constraint/constraint_equality.h>
 
-namespace suhan_contact_planner
+namespace contact_planner
 {
 
 ConstraintEquality::ConstraintEquality(const std::string &name) : ConstraintBase(name) {}

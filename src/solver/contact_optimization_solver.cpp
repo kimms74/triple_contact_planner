@@ -1,7 +1,7 @@
 #include "triple_contact_planner/solver/contact_optimization_solver.h"
 
 
-namespace suhan_contact_planner
+namespace contact_planner
 {
 
 ContactOptimizationSolver::ContactOptimizationSolver()
@@ -104,4 +104,4 @@ void ContactOptimizationSolver::resize(int total_row)
   qproblem_.setOptions(options);
 }
 
-} // namespace suhan_contact_planner
+} // namespace contact_planner
