@@ -49,7 +49,7 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
   ${EIGEN3_INCLUDE_DIRS}
   ${Boost_INCLUDE_DIRS}
-  /usr/inclue/boost
+  /usr/include/boost
 )
 include_directories(${PYTHON_INCLUDE_DIRS})
 
