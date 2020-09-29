@@ -32,19 +32,14 @@ int main(int argc, char **argv)
   object_rotation = Eigen::Quaterniond(rotation).coeffs();
   
   YAML::Node yamlnode;
-  yamlnode = YAML::LoadFile(path + "/yaml/permutation/bottom2_top1_permutation.yaml");
-  // yamlnode = YAML::LoadFile(path + "/yaml/permutation/top2_bottom1_permutation.yaml");
 
-  // tf1 << -0.268485, 0.397779, 0.0213787, 0.999296, 3.40748e-08, -1.27928e-09, -0.0375168;
-  // tf2 << -0.411417, 0.212699, 0.0213731, -0.0114453, 0.00906421, 0.720166, 0.693648;
-  // tf3 << -0.38889, 0.0150407, 0.174111, 0.706609, 0.0265277, -0.706609, -0.0265276;
-  
-  
+  //bottom2_top1일 때와 top2_bottom1일 때 파일을 바꿔줘야한다
+  // yamlnode = YAML::LoadFile(path + "/yaml/permutation/bottom2_top1_permutation.yaml");
+  yamlnode = YAML::LoadFile(path + "/yaml/permutation/top2_bottom1_permutation.yaml");
+
   Eigen::VectorXd t1(7), t2(7), t3(7);
   
   
-  // cout << yamlnode[0]["tf1"] << endl;
-
   std::ofstream file;
   file.open(path + "/qp_solve_test.yaml");
 
