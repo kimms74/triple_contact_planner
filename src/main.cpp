@@ -32,9 +32,8 @@ int main(int argc, char **argv)
   object_rotation = Eigen::Quaterniond(rotation).coeffs();
   
   YAML::Node yamlnode;
-  yamlnode = YAML::LoadFile(path + "/yaml/permutation/bottom2_top1.yaml");
-  // yamlnode = YAML::LoadFile(path + "/yaml/permutation/top2_bottom1.yaml");
-
+  yamlnode = YAML::LoadFile(path + "/yaml/permutation/bottom2_top1_permutation.yaml");
+  // yamlnode = YAML::LoadFile(path + "/yaml/permutation/top2_bottom1_permutation.yaml");
 
   // tf1 << -0.268485, 0.397779, 0.0213787, 0.999296, 3.40748e-08, -1.27928e-09, -0.0375168;
   // tf2 << -0.411417, 0.212699, 0.0213731, -0.0114453, 0.00906421, 0.720166, 0.693648;
