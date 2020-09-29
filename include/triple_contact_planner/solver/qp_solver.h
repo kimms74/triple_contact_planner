@@ -7,7 +7,7 @@
 #include <fstream>
 #include <algorithm>
 
-namespace suhan_contact_planner
+namespace contact_planner
 {
 
 class QpSolver
@@ -25,6 +25,7 @@ private:
   ContactModelPtr model_ = make_shared<StefanModel>("hi");
 
 public:
+  QpSolver();
   Eigen::Quaterniond make_quaternion(const Eigen::VectorXd &tf);
   bool qp_solve(const Eigen::VectorXd &tf1, const Eigen::VectorXd &tf2, const Eigen::VectorXd &tf3, const Eigen::VectorXd &object_rotation);
   Eigen::Affine3d get_tf(int i);

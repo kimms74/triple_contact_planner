@@ -1,7 +1,16 @@
 #include "triple_contact_planner/solver/qp_solver.h"
 
-namespace suhan_contact_planner
+namespace contact_planner
 {
+
+  QpSolver::QpSolver()
+  {
+    com_ << -0.40664, 0.12478, 0.18233;
+    com_T_.linear().setIdentity();
+    com_T_.translation() = -com_;
+    
+  }
+
   Eigen::Quaterniond QpSolver::make_quaternion(const Eigen::VectorXd &tf)
   {
     Eigen::Quaterniond quat;
@@ -39,13 +48,9 @@ namespace suhan_contact_planner
       tf_.at(i).translation()=tf.at(i).head<3>();
     }
     
-    op_.setRobot(robot_model_);
-    
+    op_.setRobot(robot_model_);    
     op_.setObjectRotation(object_rotation_);
 
-    com_ << -0.40664, 0.12478, 0.18233;
-    com_T_.linear().setIdentity();
-    com_T_.translation() = -com_;
 
     contact_nodes_.resize(3);
 

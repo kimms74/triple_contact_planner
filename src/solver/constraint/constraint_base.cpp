@@ -1,7 +1,7 @@
 #include "triple_contact_planner/solver/constraint/constraint_base.h"
 
 
-namespace suhan_contact_planner
+namespace contact_planner
 {
 
 ConstraintBase::ConstraintBase(const std::string &name)
@@ -68,4 +68,4 @@ void ConstraintBase::printCondition()
                std::endl;
 }
 
-} // namespace suhan_contact_planner
+} // namespace contact_planner

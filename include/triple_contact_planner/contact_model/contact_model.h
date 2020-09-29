@@ -7,7 +7,7 @@
 
 #include "triple_contact_planner/contact/contact.h"
 
-namespace suhan_contact_planner
+namespace contact_planner
 {
 
 /**

@@ -4,7 +4,7 @@
 #include <Eigen/Dense>
 #include <memory>
 
-namespace suhan_contact_planner
+namespace contact_planner
 {
 
 class ConstraintBase
@@ -40,4 +40,4 @@ protected:
 };
 typedef std::shared_ptr<ConstraintBase> ConstraintBasePtr;
 
-} // namespace suhan_contact_planner
+} // namespace contact_planner
