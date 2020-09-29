@@ -2,7 +2,7 @@
 
 #include <triple_contact_planner/solver/constraint/constraint_base.h>
 
-namespace suhan_contact_planner
+namespace contact_planner
 {
 
 class ConstraintInequality : public ConstraintBase
@@ -14,4 +14,4 @@ public:
   void printCondition() override;
 };
 
-} // namespace suhan_contact_planner
+} // namespace contact_planner

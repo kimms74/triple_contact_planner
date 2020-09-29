@@ -1,6 +1,6 @@
 #include <triple_contact_planner/solver/contact_optimization.h>
 
-namespace suhan_contact_planner
+namespace contact_planner
 {
 
   Eigen::Matrix3d cross_skew(Eigen::Vector3d input)
@@ -220,7 +220,9 @@ namespace suhan_contact_planner
     ContactOptimizationSolver solver_top;
 
     const int contact_number = model_->getContactNumber();
-    const int contact_bottom_number = 2;
+    //contact_bottom_number를 bottom2_top1일 때와 top2_bottom1일 때 숫자를 바꿔줘야함
+    // const int contact_bottom_number = 2;
+    const int contact_bottom_number = 1;
     const int contact_top_number = contact_number - contact_bottom_number;
     std::vector<ContactPtr> contacts;
     contacts = model_->getContactRobot();
@@ -274,4 +276,4 @@ namespace suhan_contact_planner
     
   }
 
-} // namespace suhan_contact_planner
+} // namespace contact_planner

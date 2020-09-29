@@ -4,7 +4,7 @@
 #include <vector>
 #include <Eigen/Dense>
 
-namespace suhan_contact_planner
+namespace contact_planner
 {
 
 class RobotDynamicsModel

@@ -7,7 +7,7 @@
 #include <triple_contact_planner/contact_model/contact_model.h>
 #include <triple_contact_planner/solver/constraint/constraint_base.h>
 
-namespace suhan_contact_planner
+namespace contact_planner
 {
 
 typedef Eigen::Matrix<double, -1, -1, Eigen::RowMajor> MatrixXdRow;
@@ -43,6 +43,6 @@ private:
   void resize(int total_row);
 };
 
-} // namespace suhan_contact_planner
+} // namespace contact_planner
 
 #endif // CONTACT_OPTIMIZATION_SOLVER_H
