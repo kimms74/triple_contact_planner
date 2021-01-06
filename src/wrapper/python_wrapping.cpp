@@ -10,7 +10,9 @@ BOOST_PYTHON_MODULE(python_wrapper_cpp)
     namespace bp = boost::python;
     eigenpy::enableEigenPy();
     
-    bp::class_<contact_planner::QpSolver, boost::noncopyable>("QpSolver")   
+    bp::class_<contact_planner::QpSolver, boost::noncopyable>("QpSolver")
         .def("qp_solve", &contact_planner::QpSolver::qp_solve)
+        .def("qp_solve_one_body", &contact_planner::QpSolver::qp_solve_one_body)
+        .def("get_result_force", &contact_planner::QpSolver::get_result_force)
         ;
 }

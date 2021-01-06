@@ -27,15 +27,15 @@ int main(int argc, char **argv)
 
 
   Eigen::Matrix3d rotation(3,3);
-//   rotation << 1, 0, 0, 0, 0, -1, 0, 1, 0;
-  rotation << 1, 0, 0, 0, -1, 0, 0, 0, -1;
+  // rotation << 1, 0, 0, 0, 0, -1, 0, 1, 0;
+  // rotation << 1, 0, 0, 0, -1, 0, 0, 0, -1;
+  rotation << 1, 0, 0, 0, 1, 0, 0, 0, 1;
   object_rotation = Eigen::Quaterniond(rotation).coeffs();
-  
   YAML::Node yamlnode;
 
   //bottom2_top1일 때와 top2_bottom1일 때 파일을 바꿔줘야한다
-  // yamlnode = YAML::LoadFile(path + "/yaml/permutation/bottom2_top1_permutation.yaml");
-  yamlnode = YAML::LoadFile(path + "/yaml/permutation/top2_bottom1_permutation.yaml");
+  yamlnode = YAML::LoadFile(path + "/yaml/permutation/bottom2_top1_permutation.yaml");
+  // yamlnode = YAML::LoadFile(path + "/yaml/permutation/top2_bottom1_permutation.yaml");
 
   Eigen::VectorXd t1(7), t2(7), t3(7);
   
@@ -56,24 +56,24 @@ int main(int argc, char **argv)
       { 
 
 
-//         t1 << qp.get_tf(0).translation()+ qp.get_tf(0).linear()*Eigen::Vector3d(0, 0, -0.103), 
-//               Eigen::Quaterniond(qp.get_tf(0).linear()).coeffs();
-//         t2 << qp.get_tf(1).translation()+ qp.get_tf(1).linear()*Eigen::Vector3d(0, 0, -0.103), 
-//               Eigen::Quaterniond(qp.get_tf(0).linear()).coeffs();
-//         t3 << qp.get_tf(2).translation()+ qp.get_tf(2).linear()*Eigen::Vector3d(0, 0, -0.103), 
-//               Eigen::Quaterniond(qp.get_tf(0).linear()).coeffs();
+        // t1 << qp.get_tf(0).translation()+ qp.get_tf(0).linear()*Eigen::Vector3d(0, 0, -0.103), 
+        //       Eigen::Quaterniond(qp.get_tf(0).linear()).coeffs();
+        // t2 << qp.get_tf(1).translation()+ qp.get_tf(1).linear()*Eigen::Vector3d(0, 0, -0.103), 
+        //       Eigen::Quaterniond(qp.get_tf(0).linear()).coeffs();
+        // t3 << qp.get_tf(2).translation()+ qp.get_tf(2).linear()*Eigen::Vector3d(0, 0, -0.103), 
+        //       Eigen::Quaterniond(qp.get_tf(0).linear()).coeffs();
 
           t1 << qp.get_tf(0).translation(), Eigen::Quaterniond(qp.get_tf(0).linear()).coeffs();
-          t2 << qp.get_tf(1).translation(), Eigen::Quaterniond(qp.get_tf(0).linear()).coeffs();
-          t3 << qp.get_tf(2).translation(), Eigen::Quaterniond(qp.get_tf(0).linear()).coeffs();
+          t2 << qp.get_tf(1).translation(), Eigen::Quaterniond(qp.get_tf(1).linear()).coeffs();
+          t3 << qp.get_tf(2).translation(), Eigen::Quaterniond(qp.get_tf(2).linear()).coeffs();
 
         file << "  - transform1 : " << t1.transpose().format(CommaInitFmt) << endl
             << "    transform2 : " << t2.transpose().format(CommaInitFmt) << endl
             << "    transform3 : " << t3.transpose().format(CommaInitFmt) << endl;
 
-        file << "    force 1 : " << qp.get_result_force(0)->getContactForceTorque().transpose().format(CommaInitFmt) << endl
-              << "    force 2 : " << qp.get_result_force(1)->getContactForceTorque().transpose().format(CommaInitFmt) << endl
-              << "    force 3: " << qp.get_result_force(2)->getContactForceTorque().transpose().format(CommaInitFmt) << endl;
+        file << "    force 1 : " << qp.get_result_force(0).transpose().format(CommaInitFmt) << endl
+              << "    force 2 : " << qp.get_result_force(1).transpose().format(CommaInitFmt) << endl
+              << "    force 3: " << qp.get_result_force(2).transpose().format(CommaInitFmt) << endl;
       }
     }
     return 0;

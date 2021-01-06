@@ -25,7 +25,7 @@ public:
   void setContactState(ContactState state) { contact_state_ = state; }
   void setContactForceTorque(const Eigen::Matrix<double, 6, 1>& force_torque)
   { contact_force_torque_ = force_torque; }
-  const Eigen::Matrix<double, 6, 1> & getContactForceTorque() { return contact_force_torque_; }
+  Eigen::MatrixXd getContactForceTorque() { return contact_force_torque_; }
   void setContactLength(double x, double y)
   {
     contact_length_[0] = x;
@@ -52,7 +52,7 @@ private:
   // position & rotation with regard to object frame
   Eigen::Affine3d transform_; ///< Contact position transform w.r.t object frame (\f$objH_c\f$)
 
-  Eigen::Matrix<double, 6, 1> contact_force_torque_;
+  Eigen::MatrixXd contact_force_torque_;
 };
 
 typedef std::shared_ptr<Contact> ContactPtr;

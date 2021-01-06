@@ -31,6 +31,37 @@ namespace contact_planner
     object_rotation_ = object_rotation;
   }
 
+  void ContactOptimization::setBottomTopNumber(const std::vector<Eigen::VectorXd> &tf)
+  {
+    setContactNumberZero();
+
+    for(int i=0; i < 3; i++)
+    {
+      if (tf.at(i)(2) <= 0.03)
+      {
+        contact_bottom_number_ += 1;
+      }
+      else
+      {
+        contact_top_number_ += 1;
+      }
+    }
+  }
+  void ContactOptimization::setContactNumberZero()
+  {
+    contact_bottom_number_ = 0;
+    contact_top_number_ = 0;
+  }
+  size_t ContactOptimization::getBottomNumber()
+  {
+    return contact_bottom_number_;
+  }  
+  
+  size_t ContactOptimization::getTopNumber()
+  {
+    return contact_top_number_;
+  }
+
   void ContactOptimization::setTop(const double &contact_number, const double &contact_bottom_number, const double &contact_top_number, const std::vector<ContactPtr> &contacts, ContactOptimizationSolver &solver_top)
   {
     auto eq_constraint = std::make_shared<ConstraintEquality>();
@@ -213,6 +244,85 @@ namespace contact_planner
 
     solver_bottom.setContactNumber(contact_bottom_number);
   }
+  void ContactOptimization::setConstraints(const double &contact_number,const double &contact_bottom_number, const double &contact_top_number, const std::vector<ContactPtr> &contacts, ContactOptimizationSolver &solver)
+  {
+    auto eq_constraint = std::make_shared<ConstraintEquality>();
+    // eq_constraint.
+    Eigen::MatrixXd A;
+    Eigen::VectorXd b;
+
+    // TODO: gravity
+
+    A.setZero(6, contact_number * 6);
+    b.setZero(6);
+    // b.head<3>() = model_->getTransform().linear() *
+    //               Eigen::Vector3d(0, 0, 9.8) * model_->getMass(); // TODO: Check this
+    b.head<3>() =  Eigen::Vector3d(0, 0, 9.8) * model_->getMass(); // TODO: Check this
+    // TODO: Momentum + b(3~5)
+    
+    for (int i = 0; i < contact_number; i++)
+    {
+      A.block<3, 3>(0, i * 6).setIdentity();
+      A.block<3, 3>(3, i * 6) = cross_skew(object_rotation_*contacts[i]->getContactTransform().translation());
+      A.block<3, 3>(3, i * 6 + 3).setIdentity();
+    }
+
+    eq_constraint->setA(A);
+    eq_constraint->setEqualityCondition(b);
+
+    solver.addConstraint(eq_constraint);
+
+    // every contact
+    auto ineq_constraint = std::make_shared<ConstraintInequality>();
+
+    Eigen::MatrixXd C_all;
+    Eigen::VectorXd d_all;
+    d_all.resize(12*(contact_number));
+
+    C_all.setZero(12 * (contact_number), 6 * (contact_number));
+
+    Eigen::MatrixXd C_max[6];
+    Eigen::VectorXd d_max[6];
+    const auto &f_limit = robot_->getForceLimitTop();
+
+    for (int i = 0; i < 6; i++)
+    {
+      C_max[i].setZero(2, 6);
+      C_max[i](0, i) = 1;
+      C_max[i](1, i) = -1;
+
+      d_max[i].resize(2);
+      d_max[i] = f_limit.col(i);
+    }
+
+    Eigen::MatrixXd C_i(12, 6), d_i(12, 1);
+
+    for (int i = 0; i < 6; i++)
+    {
+      C_i.block<2, 6>(i * 2, 0) = C_max[i];
+      d_i.block<2, 1>(i * 2, 0) = d_max[i];
+    }
+
+    for (int i =0; i < contact_number; i++)
+    {
+      Eigen::Matrix<double, 6, 6> R_hat;
+      Eigen::Matrix<double, 3, 3> R;
+      R = contacts[i]->getContactTransform().linear().transpose()*object_rotation_.transpose();
+      R_hat.setZero();
+      R_hat.block<3, 3>(0, 0) = R;
+      R_hat.block<3, 3>(3, 3) = R;
+
+      C_all.block<12, 6>(i * 12, i * 6) = C_i * R_hat;
+      d_all.segment<12>(i * 12) = d_i;
+    }
+
+    ineq_constraint->setA(C_all);
+    ineq_constraint->setOnlyLowerBound(d_all);
+    // ineq_constraint->printCondition();
+
+    solver.addConstraint(ineq_constraint);
+    solver.setContactNumber(contact_number);
+  }
 
   bool ContactOptimization::solve()
   {
@@ -220,10 +330,10 @@ namespace contact_planner
     ContactOptimizationSolver solver_top;
 
     const int contact_number = model_->getContactNumber();
-    //contact_bottom_number를 bottom2_top1일 때와 top2_bottom1일 때 숫자를 바꿔줘야함
-    // const int contact_bottom_number = 2;
-    const int contact_bottom_number = 1;
-    const int contact_top_number = contact_number - contact_bottom_number;
+    
+    const int contact_bottom_number = getBottomNumber();
+    const int contact_top_number = getTopNumber();
+
     std::vector<ContactPtr> contacts;
     contacts = model_->getContactRobot();
 
@@ -234,7 +344,6 @@ namespace contact_planner
     
     Eigen::VectorXd result_bottom;
     Eigen::VectorXd result_top;
-
     if (solver_top.solve(result_top))
     {
 
@@ -276,4 +385,34 @@ namespace contact_planner
     
   }
 
+bool ContactOptimization::solve_one_body()
+  {
+    ContactOptimizationSolver solver;
+
+    const int contact_number = model_->getContactNumber();
+    
+    const int contact_bottom_number = getBottomNumber();
+    const int contact_top_number = getTopNumber();
+
+    std::vector<ContactPtr> contacts;
+    contacts = model_->getContactRobot();
+
+    if (contact_number == 0)
+      return false;
+
+    setConstraints(contact_number, contact_bottom_number, contact_top_number, contacts, solver);
+
+    Eigen::VectorXd result;
+
+    if (solver.solve(result))
+    {
+
+      for (int i= 0; i < contact_number; i++ )
+      {
+        contacts[i]->setContactForceTorque(result.segment<6>((i) * 6));
+      }
+      return true;
+      }
+      return false;
+    }
 } // namespace contact_planner
