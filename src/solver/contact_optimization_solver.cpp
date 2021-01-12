@@ -24,8 +24,8 @@ bool ContactOptimizationSolver::solve(Eigen::VectorXd& result_force)
     assert(contact_number_ * 6 == constraint->cols());
   }
 
-   resize(total_row);
-
+  resize(total_row);
+  
   size_t A_row_index = 0;
   for(auto & constraint : constraints)
   {
