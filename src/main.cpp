@@ -29,13 +29,17 @@ int main(int argc, char **argv)
   Eigen::Matrix3d rotation(3,3);
   // rotation << 1, 0, 0, 0, 0, -1, 0, 1, 0;
   // rotation << 1, 0, 0, 0, -1, 0, 0, 0, -1;
-  rotation << 1, 0, 0, 0, 1, 0, 0, 0, 1;
+  // rotation << 1, 0, 0, 0, 1, 0, 0, 0, 1;
+  // rotation << 1, 0, 0, 0, 0.0871557, -0.9961947, 0, 0.9961947, 0.0871557; //x:85 degrees
+  rotation << 1, 0, 0, 0, -0.8660254, -0.5, 0, 0.5, -0.8660254; //x: 95 degrees
+  // rotation << 1, 0, 0, 0, -0.1736482, -0.9848077, 0, 0.9848077, -0.1736482;  //x: 150 degrees
+
   object_rotation = Eigen::Quaterniond(rotation).coeffs();
   YAML::Node yamlnode;
 
   //bottom2_top1일 때와 top2_bottom1일 때 파일을 바꿔줘야한다
   yamlnode = YAML::LoadFile(path + "/yaml/permutation/bottom2_top1_permutation.yaml");
-  // yamlnode = YAML::LoadFile(path + "/yaml/permutation/top2_bottom1_permutation.yaml");
+  // yamlnode = YAML::LoadFile(path + "/yaml/permutation/bottom1_top2_permutation.yaml");
 
   Eigen::VectorXd t1(7), t2(7), t3(7);
   

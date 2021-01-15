@@ -25,8 +25,8 @@ public:
     Eigen::Matrix<double, 2, 6> limit_matrix;
     for (int i = 0; i < 3; i++)
     {
-      limit_matrix(0, i) = -40;
-      limit_matrix(1, i) = -40;
+      limit_matrix(0, i) = -30;
+      limit_matrix(1, i) = -30;
     }
 
     for (int i = 3; i < 6; i++)
@@ -45,8 +45,8 @@ public:
     {
       // limit_matrix(0, i) = -27.05;
       // limit_matrix(1, i) = -27.05;
-      limit_matrix(0, i) = -13;
-      limit_matrix(1, i) = -13;
+      limit_matrix(0, i) = -30;
+      limit_matrix(1, i) = -30;
     }
 
     limit_matrix.block<1,1>(0,2) << 0;

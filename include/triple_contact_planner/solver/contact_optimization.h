@@ -23,10 +23,13 @@ public:
   void setBottom(const double &contact_number, const double &contact_bottom_number, const std::vector<ContactPtr> &contacts, const Eigen::VectorXd &normal_force, ContactOptimizationSolver &solver_bottom);
   void setTop(const double &contact_number,const double &contact_bottom_number, const double &contact_top_number, const std::vector<ContactPtr> &contacts, ContactOptimizationSolver &solver_top);
   void setConstraints(const double &contact_number,const double &contact_bottom_number, const double &contact_top_number, const std::vector<ContactPtr> &contacts, ContactOptimizationSolver &solver);
-  void setBottomTopNumber(const std::vector<Eigen::VectorXd> &tf);
+  void setTopBottomNumber(const std::vector<Eigen::VectorXd> &tf);
   void setContactNumberZero();
+  void setTopBottomMass(double &side_left_mass, double &side_right_with_long_short_middle_mass);
   size_t getBottomNumber();
   size_t getTopNumber();
+  double getTopMass();
+  double getBottomMass();
 
 private:
   ContactModelPtr model_;
@@ -35,6 +38,9 @@ private:
   Eigen::Vector3d normal_vector_;
   size_t contact_bottom_number_;
   size_t contact_top_number_;
+  double top_mass_;
+  double bottom_mass_;
+  vector<int> top_bottom_order_;
 };
 
 }
