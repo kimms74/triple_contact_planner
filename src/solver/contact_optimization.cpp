@@ -26,6 +26,13 @@ namespace contact_planner
     robot_ = robot;
   }
 
+  void ContactOptimization::setObjectInitOri()
+  {
+    Eigen::Quaterniond object_init_ori;
+    object_init_ori.coeffs() << -0.9238795, 0.3826834, 0, 0;
+      object_init_ori_ = object_init_ori.matrix();;
+  }
+
   void ContactOptimization::setObjectRotation(Eigen::MatrixXd object_rotation)
   {
     object_rotation_ = object_rotation;
@@ -130,7 +137,7 @@ namespace contact_planner
       if (top_bottom_order_.at(i) == 0)
       {
         A.block<3, 3>(0, j * 6).setIdentity();
-        A.block<3, 3>(3, j * 6) = cross_skew(object_rotation_*contacts[i]->getContactTransform().translation());
+        A.block<3, 3>(3, j * 6) = cross_skew(object_init_ori_*object_rotation_*contacts[i]->getContactTransform().translation());
         A.block<3, 3>(3, j * 6 + 3).setIdentity();
         j++;
       }
@@ -200,7 +207,7 @@ namespace contact_planner
       {
         Eigen::Matrix<double, 6, 6> R_hat;
         Eigen::Matrix<double, 3, 3> R;
-        R = contacts[i]->getContactTransform().linear().transpose()*object_rotation_.transpose();
+        R = contacts[i]->getContactTransform().linear().transpose()*(object_init_ori_*object_rotation_).transpose();
         R_hat.setZero();
         R_hat.block<3, 3>(0, 0) = R;
         R_hat.block<3, 3>(3, 3) = R;
@@ -213,7 +220,7 @@ namespace contact_planner
 
     Eigen::Matrix<double, 6, 6> R_hat;
     Eigen::Matrix<double, 3, 3> R;
-    R = object_rotation_.transpose();
+    R = (object_init_ori_*object_rotation_).transpose();
     R_hat.setZero();
     R_hat.block<3, 3>(0, 0) = R;
     R_hat.block<3, 3>(3, 3) = R;
@@ -246,7 +253,7 @@ namespace contact_planner
     for (size_t i = 0; i < contact_bottom_number; i++)
     {
       A.block<3, 3>(0, i * 6).setIdentity();
-      A.block<3, 3>(3, i * 6) = cross_skew(object_rotation_*contacts[i]->getContactTransform().translation());
+      A.block<3, 3>(3, i * 6) = cross_skew(object_init_ori_*object_rotation_*contacts[i]->getContactTransform().translation());
       A.block<3, 3>(3, i * 6 + 3).setIdentity();
     }
 
@@ -293,7 +300,7 @@ namespace contact_planner
       {
         Eigen::Matrix<double, 6, 6> R_hat;
         Eigen::Matrix<double, 3, 3> R;
-        R = contacts[i]->getContactTransform().linear().transpose()*object_rotation_.transpose();
+        R = contacts[i]->getContactTransform().linear().transpose()*(object_init_ori_*object_rotation_).transpose();
         R_hat.setZero();
         R_hat.block<3, 3>(0, 0) = R;
         R_hat.block<3, 3>(3, 3) = R;
@@ -332,7 +339,7 @@ namespace contact_planner
     for (int i = 0; i < contact_number; i++)
     {
       A.block<3, 3>(0, i * 6).setIdentity();
-      A.block<3, 3>(3, i * 6) = cross_skew(object_rotation_*contacts[i]->getContactTransform().translation());
+      A.block<3, 3>(3, i * 6) = cross_skew(object_init_ori_*object_rotation_*contacts[i]->getContactTransform().translation());
       A.block<3, 3>(3, i * 6 + 3).setIdentity();
     }
 
@@ -376,7 +383,7 @@ namespace contact_planner
     {
       Eigen::Matrix<double, 6, 6> R_hat;
       Eigen::Matrix<double, 3, 3> R;
-      R = contacts[i]->getContactTransform().linear().transpose()*object_rotation_.transpose();
+      R = contacts[i]->getContactTransform().linear().transpose()*(object_init_ori_*object_rotation_).transpose();
       R_hat.setZero();
       R_hat.block<3, 3>(0, 0) = R;
       R_hat.block<3, 3>(3, 3) = R;

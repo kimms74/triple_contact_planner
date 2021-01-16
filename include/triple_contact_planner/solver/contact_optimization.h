@@ -17,6 +17,7 @@ class ContactOptimization
 public:
   void setModel(ContactModelPtr model);
   void setRobot(RobotDynamicsModelPtr robot);
+  void setObjectInitOri();
   void setObjectRotation(Eigen::MatrixXd object_rotation);
   bool solve();
   bool solve_one_body();
@@ -34,6 +35,7 @@ public:
 private:
   ContactModelPtr model_;
   RobotDynamicsModelPtr robot_;
+  Eigen::MatrixXd object_init_ori_;
   Eigen::MatrixXd object_rotation_;
   Eigen::Vector3d normal_vector_;
   size_t contact_bottom_number_;

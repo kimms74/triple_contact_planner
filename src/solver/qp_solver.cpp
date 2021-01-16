@@ -49,10 +49,9 @@ namespace contact_planner
     }
 
     op_.setRobot(robot_model_);
+    op_.setObjectInitOri();
     op_.setObjectRotation(object_rotation_);
     op_.setTopBottomNumber(tf);
-
-    Eigen::Quaterniond quat;
 
     contact_nodes_.resize(3);
 
@@ -93,7 +92,6 @@ namespace contact_planner
 
     tf_.resize(3);
     
-    Eigen::Quaterniond quat;
     for(int i=0; i < 3; i++)
     {
       tf_.at(i).setIdentity();
@@ -102,6 +100,7 @@ namespace contact_planner
     }
     
     op_.setRobot(robot_model_);
+    op_.setObjectInitOri();
     op_.setObjectRotation(object_rotation_);
     op_.setTopBottomNumber(tf);
 
